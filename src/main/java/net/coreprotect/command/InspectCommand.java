@@ -27,26 +27,26 @@ public class InspectCommand {
 
             if (!ConfigHandler.inspecting.get(player.getName())) {
                 if (command == 0) {
-                    Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_ERROR, Selector.SECOND)); // already disabled
+                    Chat.sendMessage(player, Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_ERROR, Selector.SECOND)); // already disabled
                 }
                 else {
-                    Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_TOGGLED, Selector.FIRST)); // now enabled
+                    Chat.sendMessage(player, Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_TOGGLED, Selector.FIRST)); // now enabled
                     ConfigHandler.inspecting.put(player.getName(), true);
                 }
             }
             else {
                 if (command == 1) {
-                    Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_ERROR, Selector.FIRST)); // already enabled
+                    Chat.sendMessage(player, Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_ERROR, Selector.FIRST)); // already enabled
                 }
                 else {
-                    Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_TOGGLED, Selector.SECOND)); // now disabled
+                    Chat.sendMessage(player, Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.INSPECTOR_TOGGLED, Selector.SECOND)); // now disabled
                     ConfigHandler.inspecting.put(player.getName(), false);
                 }
             }
 
         }
         else {
-            Chat.sendMessage(player, Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_PERMISSION));
+            Chat.sendMessage(player, Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_PERMISSION));
         }
     }
 }

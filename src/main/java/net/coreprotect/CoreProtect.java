@@ -2,6 +2,7 @@ package net.coreprotect;
 
 import java.io.File;
 
+import net.coreprotect.config.JSONDataManager;
 import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -52,6 +53,7 @@ public final class CoreProtect extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        JSONDataManager.initTWLangData();
         ConfigHandler.path = this.getDataFolder().getPath() + File.separator;
         Language.loadPhrases();
 

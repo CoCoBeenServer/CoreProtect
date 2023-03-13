@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Locale;
 
+import net.coreprotect.config.JSONDataManager;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
@@ -86,7 +87,7 @@ public class BlockLookup {
                 String timeAgo = Util.getTimeSince(resultTime, time, true);
 
                 if (!found) {
-                    resultTextBuilder = new StringBuilder(Color.WHITE + "----- " + Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "----- " + Util.getCoordinates(command, worldId, x, y, z, false, false) + "\n");
+                    resultTextBuilder = new StringBuilder(Color.WHITE + "----- " + Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "----- " + Util.getCoordinates(command, worldId, x, y, z, false, false) + "\n");
                 }
                 found = true;
 
@@ -118,7 +119,7 @@ public class BlockLookup {
                     if (resultMaterial == null) {
                         resultMaterial = Material.AIR;
                     }
-                    target = Util.nameFilter(resultMaterial.name().toLowerCase(Locale.ROOT), resultData);
+                    target = Util.nameFilter(JSONDataManager.TWLangData.getString(resultMaterial.translationKey()), resultData);
                     target = "minecraft:" + target.toLowerCase(Locale.ROOT);
                 }
                 if (target.length() > 0) {
@@ -130,7 +131,7 @@ public class BlockLookup {
                     target = target.split(":")[1];
                 }
 
-                resultTextBuilder.append(timeAgo + " " + tag + " ").append(Phrase.build(phrase, Color.DARK_AQUA + rbFormat + resultUser + Color.WHITE + rbFormat, Color.DARK_AQUA + rbFormat + target + Color.WHITE, selector)).append("\n");
+                resultTextBuilder.append(timeAgo + " " + tag + " ").append(Phrase.build(phrase, Color.DARK_AQUA + rbFormat + resultUser + Color.WHITE + rbFormat, Color.YELLOW + rbFormat + target + Color.WHITE, selector)).append("\n");
                 PluginChannelListener.getInstance().sendData(commandSender, resultTime, phrase, selector, resultUser, target, -1, x, y, z, worldId, rbFormat, false, tag.contains("+"));
             }
 
@@ -146,13 +147,13 @@ public class BlockLookup {
             }
             else {
                 if (rowMax > count && count > 0) {
-                    resultText = Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.SECOND);
+                    resultText = Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.SECOND);
                 }
                 else {
                     // resultText = Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Color.WHITE + "No block data found at " + Color.ITALIC + "x" + x + "/y" + y + "/z" + z + ".";
-                    resultText = Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.FIRST);
+                    resultText = Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.FIRST);
                     if (!blockName.equals("air") && !blockName.equals("cave_air")) {
-                        resultText = Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA, Color.ITALIC + block.getType().name().toLowerCase(Locale.ROOT)) + "\n";
+                        resultText = Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA, Color.YELLOW + JSONDataManager.TWLangData.getString(block.getType().translationKey())) + "\n";
                     }
                 }
             }

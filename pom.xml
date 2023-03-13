@@ -4,7 +4,7 @@
   <artifactId>CoreProtect</artifactId>
   <version>21.3</version>
   <properties>
-    <project.branch></project.branch>
+    <project.branch>development</project.branch>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <build>
@@ -127,6 +127,11 @@
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
       <version>4.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20230227</version>
     </dependency>
   </dependencies>
 </project>
