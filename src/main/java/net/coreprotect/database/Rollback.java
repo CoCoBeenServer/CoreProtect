@@ -349,8 +349,8 @@ public class Rollback extends Queue {
                                 clearInventories = true;
                             }
 
-                            ArrayList<Object[]> data = finalBlockList.get(chunkKey);
-                            ArrayList<Object[]> itemData = finalItemList.get(chunkKey);
+                            ArrayList<Object[]> data = finalBlockList.getOrDefault(chunkKey, new ArrayList<>());
+                            ArrayList<Object[]> itemData = finalItemList.getOrDefault(chunkKey, new ArrayList<>());
                             Map<Block, BlockData> chunkChanges = new LinkedHashMap<>();
 
                             for (Object[] row : data) {
@@ -823,7 +823,7 @@ public class Rollback extends Queue {
                                                     blockCount1++;
                                                 }
                                             }
-                                            else if (Tag.SIGNS.isTagged(rowType)) {// sign
+                                            else if (BukkitAdapter.ADAPTER.isSign(rowType)) {// sign
                                                 Util.prepareTypeAndData(chunkChanges, block, rowType, blockData, false);
                                                 Queue.queueSignUpdate(rowUser, block.getState(), rollbackType, rowTime);
 
@@ -1716,7 +1716,27 @@ public class Rollback extends Queue {
                                 modifiedArmor = addedItem ? setArmor : modifiedArmor;
                             }
                             if (!addedItem) {
-                                addedItem = (inventory.addItem(itemstack).size() == 0);
+                                if (BukkitAdapter.ADAPTER.isChiseledBookshelf(type)) {
+                                    ItemStack[] inventoryContents = inventory.getStorageContents();
+                                    int i = 0;
+                                    for (ItemStack stack : inventoryContents) {
+                                        if (stack == null) {
+                                            inventoryContents[i] = itemstack;
+                                            addedItem = true;
+                                            break;
+                                        }
+                                        i++;
+                                    }
+                                    if (addedItem) {
+                                        inventory.setStorageContents(inventoryContents);
+                                    }
+                                    else {
+                                        addedItem = (inventory.addItem(itemstack).size() == 0);
+                                    }
+                                }
+                                else {
+                                    addedItem = (inventory.addItem(itemstack).size() == 0);
+                                }
                             }
                             if (!addedItem && isPlayerInventory) {
                                 PlayerInventory playerInventory = (PlayerInventory) inventory;
