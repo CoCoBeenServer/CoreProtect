@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Locale;
 
+import net.coreprotect.config.JSONDataManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -97,7 +98,7 @@ public class InteractionLookup {
                 if (resultMaterial == null) {
                     resultMaterial = Material.AIR;
                 }
-                String target = resultMaterial.name().toLowerCase(Locale.ROOT);
+                String target = JSONDataManager.TWLangData.getString(resultMaterial.translationKey());
                 target = Util.nameFilter(target, resultData);
                 if (target.length() > 0) {
                     target = "minecraft:" + target.toLowerCase(Locale.ROOT) + "";
@@ -108,7 +109,7 @@ public class InteractionLookup {
                     target = target.split(":")[1];
                 }
 
-                resultBuilder.append(timeAgo + " " + Color.WHITE + "- ").append(Phrase.build(Phrase.LOOKUP_INTERACTION, Color.DARK_AQUA + rbFormat + resultUser + Color.WHITE + rbFormat, Color.DARK_AQUA + rbFormat + target + Color.WHITE, Selector.FIRST)).append("\n");
+                resultBuilder.append(timeAgo + " " + Color.WHITE + "- ").append(Phrase.build(Phrase.LOOKUP_INTERACTION, Color.DARK_AQUA + rbFormat + resultUser + Color.WHITE + rbFormat, Color.YELLOW + rbFormat + target + Color.WHITE, Selector.FIRST)).append("\n");
                 PluginChannelListener.getInstance().sendData(commandSender, resultTime, Phrase.LOOKUP_INTERACTION, Selector.FIRST, resultUser, target, -1, x, y, z, worldId, rbFormat, false, false);
             }
             result = resultBuilder.toString();
@@ -123,10 +124,10 @@ public class InteractionLookup {
             }
             else {
                 if (rowMax > count && count > 0) {
-                    result = Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.SECOND);
+                    result = Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.SECOND);
                 }
                 else {
-                    result = Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.THIRD);
+                    result = Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.THIRD);
                 }
             }
 

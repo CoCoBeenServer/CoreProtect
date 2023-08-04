@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import net.coreprotect.config.JSONDataManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -108,7 +109,8 @@ public class ChestTransactionLookup {
                 if (resultMaterial == null) {
                     resultMaterial = Material.AIR;
                 }
-                String target = resultMaterial.name().toLowerCase(Locale.ROOT);
+
+                String target = JSONDataManager.TWLangData.getString(resultMaterial.translationKey());
                 target = Util.nameFilter(target, resultData);
                 if (target.length() > 0) {
                     target = "minecraft:" + target.toLowerCase(Locale.ROOT) + "";
@@ -119,7 +121,7 @@ public class ChestTransactionLookup {
                     target = target.split(":")[1];
                 }
 
-                result.add(new StringBuilder(timeAgo + " " + tag + " " + Phrase.build(Phrase.LOOKUP_CONTAINER, Color.DARK_AQUA + rbFormat + resultUser + Color.WHITE + rbFormat, "x" + resultAmount, Util.createTooltip(Color.DARK_AQUA + rbFormat + target, tooltip) + Color.WHITE, selector)).toString());
+                result.add(new StringBuilder(timeAgo + " " + tag + " " + Phrase.build(Phrase.LOOKUP_CONTAINER, Color.DARK_AQUA + rbFormat + resultUser + Color.WHITE + rbFormat, "x" + resultAmount, Util.createTooltip(Color.YELLOW + rbFormat + target, tooltip) + Color.WHITE, selector)).toString());
                 PluginChannelListener.getInstance().sendData(commandSender, resultTime, Phrase.LOOKUP_CONTAINER, selector, resultUser, target, resultAmount, x, y, z, worldId, rbFormat, true, tag.contains("+"));
             }
             results.close();
@@ -132,10 +134,10 @@ public class ChestTransactionLookup {
             }
             else {
                 if (rowMax > count && count > 0) {
-                    result.add(Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.SECOND));
+                    result.add(Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_RESULTS_PAGE, Selector.SECOND));
                 }
                 else {
-                    result.add(Color.DARK_AQUA + "CoreProtect " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.SECOND));
+                    result.add(Color.DARK_AQUA + "容器操作紀錄 " + Color.WHITE + "- " + Phrase.build(Phrase.NO_DATA_LOCATION, Selector.SECOND));
                 }
             }
 
