@@ -642,7 +642,7 @@ public final class PlayerInteractListener extends Queue implements Listener {
                             });
                             */
                         }
-                        else if ((type == Material.CAMPFIRE || type == Material.SOUL_CAMPFIRE) && CampfireStartListener.useCampfireStartEvent) {
+                        else if (CampfireStartListener.useCampfireStartEvent && (type == Material.CAMPFIRE || type == Material.SOUL_CAMPFIRE)) {
                             ItemStack handItem = null;
                             ItemStack mainHand = player.getInventory().getItemInMainHand();
                             ItemStack offHand = player.getInventory().getItemInOffHand();
@@ -904,7 +904,7 @@ public final class PlayerInteractListener extends Queue implements Listener {
 
                     String relativeBlockKey = world.getName() + "-" + relativeBlockLocation.getBlockX() + "-" + relativeBlockLocation.getBlockY() + "-" + relativeBlockLocation.getBlockZ();
                     String blockKey = world.getName() + "-" + blockLocation.getBlockX() + "-" + blockLocation.getBlockY() + "-" + blockLocation.getBlockZ();
-                    Object[] keys = new Object[] { relativeBlockKey, blockKey, handItem };
+                    Object[] keys = new Object[] { System.currentTimeMillis(), relativeBlockKey, blockKey, handItem };
                     ConfigHandler.entityBlockMapper.put(player.getName(), keys);
                 }
             }
